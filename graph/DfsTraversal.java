@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.Queue;
 
-class Graph1<T>{
+class Graph2<T>{
     Map<T,List<T>> map = new HashMap<>();
 
     public void addVertex(T s){
@@ -28,39 +28,31 @@ class Graph1<T>{
         }
     }
 
-    public void bfs(Set<T> st, T node){
+    public void dfs(Set<T> st, T node){
         st.add(node);
+        System.out.print(node+" ");
 
-        Queue<T> q = new LinkedList<>();
-
-        q.add(node);
-        
-        
-        while(!q.isEmpty()){
-            T front = q.poll();
-            System.out.print(front+" ");
-
-            List<T> values = map.get(node);
-
-            for(T neibour: values){
-                if(!st.contains(neibour)){
-                    st.add(neibour);
-                    q.add(neibour);
+        List<T> values = map.get(node);
+        if(values != null){
+            for(T value : values){
+                if(!st.contains(value)){
+                    dfs(st, value);
                 }
             }
         }
     }
 
-    public void bfsTraversal(){
+    public void dfsTraversal(){
 
         Set<T> st = new HashSet<>();
-        System.out.println("bfs traversal is: ");
+        System.out.println("dfs traversal is: ");
 
         for(Map.Entry<T,List<T>> entry: map.entrySet()){
             
             if(!st.contains(entry.getKey())){
-                bfs(st, entry.getKey());
+                dfs(st, entry.getKey());
             }
+
         }
     }
 
@@ -72,9 +64,9 @@ class Graph1<T>{
 }
 
 
-public class UndirectedBfsTraversal {
+public class DfsTraversal {
     public static void main(String []args){
-        Graph1<Integer> graph = new Graph1<Integer>();
+        Graph2<Integer> graph = new Graph2<Integer>();
 
         System.out.println("Undirected grph is: ");
         graph.addEdge(0, 1, true);
@@ -86,6 +78,6 @@ public class UndirectedBfsTraversal {
 
         graph.printEdge();
         System.out.println();
-        graph.bfsTraversal();
+        graph.dfsTraversal();
     }
 }
